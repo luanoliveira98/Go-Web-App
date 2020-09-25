@@ -54,5 +54,7 @@ func Delete(w http.ResponseWriter, r *http.Request) {
 
 // Edit é responsábel por carregar a página de edição de produto
 func Edit(w http.ResponseWriter, r *http.Request) {
-	temp.ExecuteTemplate(w, "Edit", nil)
+	idDoProduto := r.URL.Query().Get("id")
+	produto := models.EditaProduto(idDoProduto)
+	temp.ExecuteTemplate(w, "Edit", produto)
 }
