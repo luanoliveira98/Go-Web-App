@@ -13,7 +13,7 @@ type Produto struct {
 func BuscaTodosOsProdutos() []Produto {
 	db := db.ConectaComBancoDeDados()
 
-	selectDeTodosOsProdutos, err := db.Query("Select * from produtos")
+	selectDeTodosOsProdutos, err := db.Query("Select * from produtos order by id asc")
 	if err != nil {
 		panic(err.Error())
 	}
@@ -90,6 +90,7 @@ func EditaProduto(id string) Produto {
 			panic(err.Error())
 		}
 
+		produtoParaAtualizar.ID = id
 		produtoParaAtualizar.Nome = nome
 		produtoParaAtualizar.Descricao = descricao
 		produtoParaAtualizar.Preco = preco
@@ -98,4 +99,17 @@ func EditaProduto(id string) Produto {
 
 	defer db.Close()
 	return produtoParaAtualizar
+}
+
+// AtualizaProduto é responsável por atualizar um produto
+func AtualizaProduto(id int, nome, descricao string, preco float64, quantidade int) {
+	db := db.ConectaComBancoDeDados()
+
+	atualizaProduto, err := db.Prepare("update produtos set nome = $1, descricao = $2, preco = $3, quantidade = $4 where id = $5")
+	if err != nil {
+		panic(err.Error())
+	}
+
+	atualizaProduto.Exec(nome, descricao, preco, quantidade, id)
+	defer db.Close()
 }
