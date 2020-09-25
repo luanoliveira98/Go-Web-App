@@ -14,3 +14,8 @@ func Index(w http.ResponseWriter, r *http.Request) {
 	todosOsProdutos := models.BuscaTodosOsProdutos()
 	temp.ExecuteTemplate(w, "Index", todosOsProdutos)
 }
+
+// New é responsável por carregar a página de cadastro de produtos
+func New(w http.ResponseWriter, r *http.Request) {
+	temp.ExecuteTemplate(w, "New", nil)
+}
