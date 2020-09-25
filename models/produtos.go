@@ -9,7 +9,7 @@ type Produto struct {
 	ID, Quantidade  int
 }
 
-// BuscaTodosOSProdutos é responsavel por fazer um select all em produtos
+// BuscaTodosOsProdutos é responsavel por fazer um select all em produtos
 func BuscaTodosOsProdutos() []Produto {
 	db := db.ConectaComBancoDeDados()
 
@@ -40,4 +40,9 @@ func BuscaTodosOsProdutos() []Produto {
 	}
 	defer db.Close()
 	return produtos
+}
+
+// CriaNovoProduto é responsável por inserir um novo produto
+func CriaNovoProduto(nome, descricao string, preco float64, quantidade int) {
+	db := db.ConectaComBancoDeDados()
 }
